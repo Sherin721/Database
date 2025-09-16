@@ -1,31 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { UserProvider } from "./context/UserContext";
 import Login from "./components/Login";
 import UserForm from "./components/UserForm";
 import UserTable from "./components/UserTable";
 import { CiLogout } from "react-icons/ci";
 
-
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(() => {
-    const saved = localStorage.getItem("loggedIn");
-    return saved === "true"; 
-  });
+  // Store logged-in user's email (null if not logged in)
+  const [loggedInUser, setLoggedInUser] = useState<string | null>(
+    () => localStorage.getItem("loggedInUser")
+  );
 
-  const handleLogin = () => {
-    setLoggedIn(true);
-    localStorage.setItem("loggedIn", "true");
+  // Called by Login component when login succeeds
+  const handleLogin = (email: string) => {
+    setLoggedInUser(email);
+    localStorage.setItem("loggedInUser", email);
   };
 
   const handleLogout = () => {
-    setLoggedIn(false);
-    localStorage.removeItem("loggedIn");
+    setLoggedInUser(null);
+    localStorage.removeItem("loggedInUser");
   };
 
   return (
     <UserProvider>
       <div style={{ padding: 20 }}>
-        {loggedIn ? (
+        {loggedInUser ? (
           <>
             <header
               style={{
@@ -39,7 +39,7 @@ export default function App() {
                 onClick={handleLogout}
                 style={{ padding: "6px 12px", cursor: "pointer" }}
               >
-                Logout <CiLogout/>
+                Logout <CiLogout />
               </button>
             </header>
 
