@@ -8,19 +8,18 @@ import { CiLogout } from "react-icons/ci";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(() => {
-    // Load initial state from localStorage
     const saved = localStorage.getItem("loggedIn");
     return saved === "true"; 
   });
 
   const handleLogin = () => {
     setLoggedIn(true);
-    localStorage.setItem("loggedIn", "true"); // save
+    localStorage.setItem("loggedIn", "true");
   };
 
   const handleLogout = () => {
     setLoggedIn(false);
-    localStorage.removeItem("loggedIn"); // clear
+    localStorage.removeItem("loggedIn");
   };
 
   return (
